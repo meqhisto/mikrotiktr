@@ -1,0 +1,7 @@
+#PPPOE PROFİLİNİZİN OLDUĞU YERDE SCRİPT YAZILABİLEN BİR ALAN MEVCUT. "ON" MÜŞTERİ ONLİNE, "OFF" MÜŞTERİ OFFLİNE DEMEKTİR.
+#ON KISMINA
+/tool fetch keep-result=no url="https://api.telegram.org/bot"TELEGRAMBOTID"/sendMessage\?chat_id="TELEGRAMCHATID"&text=$user%20Baglanti%20Yapti" mode http dst-path=login.txt
+
+#OFF KISMINA 
+
+/tool fetch keep-result=no url="https://api.telegram.org/bot"TELEGRAMBOTID"/sendMessage\?chat_id="TELEGRAMCHATID"&text=$user%20Baglanti%20Koptu" mode http dst-path=login.txt
