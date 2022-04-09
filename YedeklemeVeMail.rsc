@@ -28,7 +28,7 @@
 	:log error ("$SMP Email ayarlarınız düzgün değil. Script Durdu.");   
 	:error "$SMP bye!";
 }
-
+ 
 #MİKROTİK İSMİ KONTROL EDİLİYOR
 if ([:len [/system identity get name]] = 0 or [/system identity get name] = "MikroTik") do={
 	:log warning ("$SMP Lütfen Uygun bir isim kullanınınız (System -> Identity), kısa ve açıklayıcı olmasını tercih ediniz.");  
