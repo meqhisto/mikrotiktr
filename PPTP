@@ -1,0 +1,9 @@
+/ip pool add name=PPTP_VPN_POOL ranges=10.20.30.2-10.20.30.40
+/ip firewall nat add action=masquerade chain=srcnat src-address=10.20.30.0/24
+/ppp profile add local-address=10.20.30.1 name=L2TP_PROFILE remote-address=PPTP_VPN_POOL
+/interface pptp-server server set default-profile=PPTP_PROFILE enabled=yes
+/ppp secret add name="KULLANICIADINIZ" password="ŞİFRENİZ" profile=PPTP_PROFILE service=pptp
+/interface pptp-server server set default-profile=PPTP_PROFILE enabled=yes ipsec-secret="ŞİFRENİZ" use-ipsec=required
+
+
+##"KULLANICIADINIZ" ve "ŞİFRENİZ" kısmına kendi belirlediğiniz komutları yazınız
