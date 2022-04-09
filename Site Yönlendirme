@@ -1,0 +1,17 @@
+##MIKROTIK İNTERNETİ BAŞKA PORTA YÖNLENDİRME##
+
+#topoloji
+# müşterinin iki veya daha fazla interneti var olduğu versiyonda geçerlidir. Müşteri ya da kendimizin cihaz üzerindeki yükü dağıtmaya yönelik işlemleri yapabileceğimiz bir versiyon. Örnek olarak YOUTUBE'u ele alalım. Müşteri internetin iki hattan da çıkmasını istiyor fakat youtube için  sadece ikinci hattı kullanmak istiyor olsun. Bunun için yapacağımız sıralama söyle
+#interface kısmına gelip oradan iki isp yi interface list kısmında aynı listeye ekliyoruz. Burada WANN diye bir liste oluşturduk.
+#bir addres list oluşturmamız lazım (bunun için seçeceğimiz sitenin internette bulunan ip adreslerini ya da raw seçeneğini kullanacağız(raw otomatik yakalar ve adress liste ekler))
+/ip firewall raw
+add action=add-dst-to-address-list address-list=YoutubeAdresListesi \ address-list-timeout=none-static chain=prerouting content=youtube.com
+#Youtube için tek content yok. bundan dolayı google amcadan diğer site isimleri için bakmak gerek
+#adress list için YONLEN diye bir kural ekleyip burada yönlendirme yapacağımız iç ipleri(192.168.x.x/xx ya da lokal ip bloğu ne ise yazıyoruz)
+#adress liste düşmeye başlamış olması lazım ip lerin. şimdi bunları mangle etmemiz gerek 
+add action=mark-routing chain=prerouting dst-address-list=YoutubeAdresListesi new-routing-mark=YoutubeMark passthrough=no src-address-list=YONLEN
+#bunu da oluşturduktan sonra listeyi src nat yapmamız gerekiyor ile YONLEN listesi masqurade yapıp out interface'i çıkış yapmak istediğimiz out interface liste WANN alıyoruz.
+
+add action=masquerade chain=srcnat out-interface-list=WANN  src-address-list=YONLEN
+
+#en sonunda da route yapmamız gerek. bunu da ip route kısmına gelerek yapacazğız. Burada gateway kısmına hangi çıkış istiyorsak onu vereceğiz.(pppoe-out,modemip,ethernet portu) ve routing markta da YoutubeMark seçiyoruz.
