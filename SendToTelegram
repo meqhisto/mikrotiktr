@@ -1,0 +1,11 @@
+:global telegramMessage
+:local botid
+:local chatid
+
+set botid "TELEGRAMIDGELECEK"
+set chatid "CHATIDGELECEK" 
+
+if ($telegramMessage != "") do={
+   /tool fetch url="https://api.telegram.org/bot$botid/sendMessage\?chat_id=$chatid&text=$telegramMessage" keep-result=no
+   set telegramMessage ""
+}
