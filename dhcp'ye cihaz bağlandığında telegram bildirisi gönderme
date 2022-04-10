@@ -1,0 +1,4 @@
+if ($leaseBound = "1") do={
+global telegramMessage "$"lease-hostname" ($leaseActMAC)  $leaseActIP" 
+/system script run SendToTelegram
+}
